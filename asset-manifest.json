@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/khaledawaza/meet/static/css/main.073c9b0a.css",
+    "main.js": "/khaledawaza/meet/static/js/main.38e5bbb1.js",
+    "static/js/787.4b564826.chunk.js": "/khaledawaza/meet/static/js/787.4b564826.chunk.js",
+    "service-worker.js": "/khaledawaza/meet/service-worker.js",
+    "static/media/logo.svg": "/khaledawaza/meet/static/media/logo.103b5fa18196d5665a7e12318285c916.svg",
+    "index.html": "/khaledawaza/meet/index.html",
+    "main.073c9b0a.css.map": "/khaledawaza/meet/static/css/main.073c9b0a.css.map",
+    "main.38e5bbb1.js.map": "/khaledawaza/meet/static/js/main.38e5bbb1.js.map",
+    "787.4b564826.chunk.js.map": "/khaledawaza/meet/static/js/787.4b564826.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.38e5bbb1.js"
+  ]
+}
