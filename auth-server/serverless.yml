@@ -21,8 +21,27 @@ service: auth-server
 frameworkVersion: '3'
 
 provider:
+
+  nprovider:
   name: aws
   runtime: nodejs12.x
+  region: eu-central-1
+  timeout: 60 # optional, in seconds, default is 6
+  environment:
+    CLIENT_ID: ${file(config.json):320876945414-q1aiihlav7br4bkr4fc3mrq8g1tt3tc8.apps.googleusercontent.com}
+    CLIENT_SECRET: ${file(config.json):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
+    PROJECT_ID: ${file(config.json):meet-app-379011}
+    CALENDAR_ID: ${file(config.json):####CALENDAR_ID####}
+functions:
+  getAuthURL:
+    handler: handler.getAuthURL
+    events:
+      - http:
+          path: api/get-auth-url
+          method: get
+
+
+
 
 # you can overwrite defaults here
 #  stage: dev

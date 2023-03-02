@@ -52,7 +52,7 @@
       const resultLink = document.getElementById("authURL");
       // Replace this with your own endpoint
       const getAuthURL =
-        "#####";
+        "https://accounts.google.com/o/oauth2/auth";
 
       getURLElement.onclick = function () {
         fetch(getAuthURL)
@@ -75,7 +75,7 @@
       const getAccessToken = document.getElementById("getToken");
       const accessTokenElement = document.getElementById("accessToken");
       const getToken =
-        "####";
+        "https://oauth2.googleapis.com/token";
 
       getAccessToken.onclick = function () {
         let code = codeValue.value;
