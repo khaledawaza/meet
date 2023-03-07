@@ -1,10 +1,22 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import EventList from '../EventList';
+import React, { Component } from "react";
 
-describe('<EventList /> component', () => {
-  test('render correct number of events', () => {
-    const EventListWrapper = shallow(<EventList events={[{}, {}, {}, {}]} />);
-    expect(EventListWrapper.find(Event)).toHaveLength(4);
-  });
-});
+class Event extends Component {
+  render() {
+    return <div></div>;
+  }
+}
+export default Event;
+
+
+render() {
+  const { events } = this.props;
+  return (
+    <ul className="EventList">
+      {events.map(event =>
+        <li>
+          <Event event={event} />
+        </li>
+      )}
+    </ul>
+  );
+}
