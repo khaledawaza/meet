@@ -5,6 +5,7 @@ import React, { Component } from "react";
      query: "",
      suggestions: [],
    };
+   
    handleInputChanged = (event) => {
      const value = event.target.value;
      const suggestions = this.props.locations.filter((location) => {
