@@ -16,12 +16,14 @@ const credentials = {
   redirect_uris: ["https://khaledawaza.github.io/meet", "http://localhost:3000"],
   javascript_origins: ["https://khaledawaza.github.io/meet", "http://localhost:3000"],
 };
+
 const { client_secret, client_id, redirect_uris, calendar_id } = credentials;
 const oAuth2Client = new google.auth.OAuth2(
   client_id,
   client_secret,
   redirect_uris[0]
 );
+
 module.exports.getAuthURL = async () => {
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
@@ -32,9 +34,8 @@ module.exports.getAuthURL = async () => {
   return {
     statusCode: 200,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      "Access-Control-Allow-Credentials": true,
-
+      "Access-Control-Allow-Origin": "*",
+      //"Access-Control-Allow-Credentials": true
     },
     body: JSON.stringify({ authUrl: authUrl }),
   };

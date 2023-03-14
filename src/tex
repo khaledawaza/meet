@@ -1,0 +1,7 @@
+Secret key = TIZLMZG/GTCPZPBSYnamhDApvLWM666Qe6Ud9EXZ
+
+ACCESS_Key = AKIATOFOTOK5WX5UVCMO
+
+serverless config credentials --provider aws --key AKIATOFOTOK5WX5UVCMO --secret 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
+
+https://vm7i0tpcx7.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url

@@ -6,6 +6,11 @@ import React, { Component } from "react";
  import { mockData } from "./mock-data";
 
  class App extends Component {
+  state = {
+    events:[],
+    location:[]
+  }
+  
    render() {
      return (
        <div className="App">
