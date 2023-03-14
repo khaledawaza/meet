@@ -8,7 +8,6 @@
  */
 
 import { mockData } from './mock-data';
-import axios from 'axios';
 import NProgress from 'nprogress';
 
 export const extractLocations = (events) => {
@@ -63,7 +62,7 @@ export const getEvents = async () => {
       'https://iu2wbfqgb9.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' +
       '/' +
       token;
-    const result = await axios.get(url);
+    const result = await fetch(url);
     if (result.data) {
       var locations = extractLocations(result.data.events);
       localStorage.setItem('lastEvents', JSON.stringify(result.data));
@@ -100,7 +99,7 @@ export const getAccessToken = async () => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = await searchParams.get('code');
     if (!code) {
-      const results = await axios.get(
+      const results = await fetch(
         'https://iu2wbfqgb9.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url'
       );
       const { authUrl } = results.data;
