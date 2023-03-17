@@ -1,7 +1,7 @@
-Secret key = TIZLMZG/GTCPZPBSYnamhDApvLWM666Qe6Ud9EXZ
+Secret key = yHHIujKi6kzQr54HMo6GFziZcB/UOqQXNVYAsBET
 
-ACCESS_Key = AKIATOFOTOK5WX5UVCMO
+ACCESS_Key = AKIATOFOTOK57PVLU5WV
 
-serverless config credentials --provider aws --key AKIATOFOTOK5WX5UVCMO --secret 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
+serverless config credentials --provider aws --key AKIATOFOTOK57PVLU5WV --secret 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
 
 https://vm7i0tpcx7.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url

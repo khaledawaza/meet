@@ -9,8 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
-    "enzyme": "^3.11.0"
+  "dependencies": {
+    "googleapis": "^59.0.0"
   }
 }
