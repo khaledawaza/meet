@@ -1,37 +1,44 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
- class Event extends Component {
-   state = { collapsed: true };
-   toggleDetails = () => {
-     this.setState((prevState) => ({
-       collapsed: !prevState.collapsed,
-     }));
-   };
+class Event extends Component {
+    state = {
+        isCollapsed: true
+    };
 
-   render() {
-     const { event } = this.props;
-     const { collapsed } = this.state;
-     return (
-       <div>
-         <h1 className="summary">{event.summary}</h1>
-         <p className="event-start">
-           {new Date(event.start.dateTime).toString()}
-         </p>
-         <p className="event-location">{`@${event.summary} | ${event.location}`}</p>
-         {!collapsed && (
-           <>
-             <h2 className="about">About event:</h2>
-             <a className="link" href={event.htmlLink}>
-               See details on Google Calendar
-             </a>
-             <p className="description">{event.description}</p>
-           </>
-         )}
-         <button className="details-btn" onClick={() => this.toggleDetails()}>
-           {collapsed ? "show" : "hide"} details
-         </button>
-       </div>
-     );
-   }
- }
- export default Event;
+    toggleDetails = () => {
+        this.setState((prevState) => ({
+            isCollapsed: !prevState.isCollapsed,
+        }));
+    };
+
+
+    render() {
+        const { event } = this.props;
+        const { isCollapsed } = this.state;
+        const dateStart = new Date(event.start.dateTime).toGMTString();
+        const dateEnd = new Date(event.end.dateTime).toGMTString();
+
+        return (
+            <div className='event'>
+                <h4 className='name' style={{ fontWeight: "bold" }}>{event.summary}</h4>
+                <p className='start'>{dateStart}</p>
+                <p className='end'>{dateEnd}</p>
+                <p className='location'>{event.location}</p>
+                {!isCollapsed && (
+                    <div className='event-details'>
+                        <a className='link' href={event.htmlLink}>See details on Google Calendar</a>
+                        <p className='description'>{event.description}</p>
+                    </div>
+                )}
+                <button
+                    className="details-btn"
+                    onClick={() => this.toggleDetails()}
+                >{isCollapsed ? "Show" : "Hide"} Details
+                </button>
+
+            </div>
+        );
+    }
+}
+
+export default Event

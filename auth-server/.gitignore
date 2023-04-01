@@ -5,5 +5,5 @@ jspm_packages
 # Serverless directories
 .serverless
 
-#environment varibles
+# Serverless directories
 config.json

@@ -1,26 +1,37 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { ErrorAlert } from './Alert';
 
- class NumberOfEvents extends Component {
-   state = { num: 32 };
+class NumberOfEvents extends Component {
+    state = {
+        NOE: this.props.NOE || 32,
+        infoText: '',
+    }
 
-   changeNum(value) {
-     this.setState({ num: value });
-   }
+    onChange = (event) => {
+        const inputValue = event.target.value;
+        if (inputValue <= 0 | inputValue > 32) {
+            this.setState({ infoText: 'Please select the number from 1 to 32.' })
+        } else {
+            this.setState({ NOE: inputValue, infoText: '' });
+            this.props.updateEvents(null, inputValue)
+        }
+    }
 
-   render() {
-     const { num } = this.state;
+    render() {
+        return (
+            <div className='NOE'>
+                <label for='number-of-events'>number of events: </label>
+                <input
+                    className='number'
+                    type="number"
+                    value={this.state.NOE}
+                    onChange={this.onChange}
+                />
+                <ErrorAlert text={this.state.infoText} />
+            </div>
+        );
+    };
+};
 
-     return (
-       <input
-         className="num"
-         type="number"
-         value={num}
-         onChange={(event) => {
-           this.changeNum(event.target.value);
-         }}
-       ></input>
-     );
-   }
- }
 
- export default NumberOfEvents;
+export default NumberOfEvents;
