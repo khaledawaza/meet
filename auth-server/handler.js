@@ -1,4 +1,5 @@
 const { google } = require("googleapis");
+// eslint-disable-next-line no-unused-vars
 const OAuth2 = google.auth.OAuth2;
 const calendar = google.calendar("v3");
 /**

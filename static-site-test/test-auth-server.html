@@ -85,15 +85,14 @@
       // -- END OF STEP 1
 
       // -- STEP 2
-      const codeValue = document.getElementById("code");
+    const codeValue = document.getElementById("code");
       const getAccessToken = document.getElementById("getToken");
       const accessTokenElement = document.getElementById("accessToken");
       const getToken =
-        "https://c5y0i392sf.execute-api.eu-central-1.amazonaws.com/dev/api/token";
+        "https://c5y0i392sf.execute-api.eu-central-1.amazonaws.com/dev/api/get-events";
 
       getAccessToken.onclick = function () {
         let code = codeValue.value;
-
         // if the authorization code is not URL-encoded, then URL-encode it.
         if (decodeURIComponent(code) === code) {
           code = encodeURIComponent(codeValue.value);
@@ -107,26 +106,27 @@
             accessTokenElement.innerText = JSON.stringify(json);
           });
       };
-      // -- END OF STEP 2
+        // --------------------- END OF STEP 2
 
-      // -- STEP 3
-      const getEvents = document.getElementById("getEvents");
-      const events = document.getElementById("events");
-      const getCalendarEvents =
-        "https://c5y0i392sf.execute-api.eu-central-1.amazonaws.com/dev/api/get-events";
 
-      getEvents.onclick = function () {
-        const { access_token } = JSON.parse(accessTokenElement.innerText);
-        const eventRequest = getCalendarEvents + "/" + access_token;
-        fetch(eventRequest)
-          .then(function (response) {
-            return response.json();
-          })
-          .then(function (json) {
-            events.innerText = JSON.stringify(json, null, 2);
-          });
-      };
-      // -- END OF STEP 3
-    </script>
+  // -- STEP 3
+  const getEvents = document.getElementById("getEvents");
+  const events = document.getElementById("events");
+  const getCalendarEvents = "https://c5y0i392sf.execute-api.eu-central-1.amazonaws.com/dev/api/get-events";
+  
+  getEvents.onclick = function () {
+  const { access_token } = JSON.parse(accessTokenElement.innerText);
+  const eventRequest = getCalendarEvents + "/" + access_token;
+  fetch(eventRequest)
+  .then(function (response) {
+  return response.json();
+  })
+  .then(function (json) {
+  events.innerText = JSON.stringify(json, null, 2);
+  });
+  };
+  
+  </script>
   </body>
-</html>
+  
+  </html>
