@@ -8,7 +8,6 @@ import reportWebVitals from "./reportWebVitals";
 import * as atatus from "atatus-spa";
 atatus.config("257b23cfead04a75998697e1af0a5a14").install();
 
-atatus.notify(new Error("Test Atatus Setup"));
 //ReactDOM.render(<App />, document.getElementById('root'));
 const root = document.getElementById("root");
 render(
