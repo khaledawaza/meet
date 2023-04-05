@@ -46,7 +46,8 @@ describe("<App /> integration", () => {
     AppWrapper.unmount();
   });
 
-<<<<<<< HEAD
+ // eslint-disable-next-line no-unused-expressions, no-undef
+ HEAD
   test("get list of events matching the city selected by the user", async () => {
     const AppWrapper = mount(<App />);
     const CitySearchWrapper = AppWrapper.find(CitySearch);
@@ -80,7 +81,8 @@ describe("<App /> integration", () => {
     expect(AppWrapper.find(NumberOfEvents).state("NOE")).toBe(AppNOEState);
     AppWrapper.unmount();
   });
-=======
+
+    // eslint-disable-next-line jest/no-identical-title
     test('get list of events matching the city selected by the user', async () => {
         const AppWrapper = mount(<App />);
         const CitySearchWrapper = AppWrapper.find(CitySearch);
@@ -96,6 +98,7 @@ describe("<App /> integration", () => {
         AppWrapper.unmount();
     });
 
+    // eslint-disable-next-line jest/no-identical-title
     test('get list of all events when user selects "See all cities"', async () => {
         const AppWrapper = mount(<App />);
         const suggestionItems = AppWrapper.find(CitySearch).find(".suggestions li");
@@ -105,6 +108,7 @@ describe("<App /> integration", () => {
         AppWrapper.unmount();
     });
 
+    // eslint-disable-next-line jest/no-identical-title
     test('App passes "NOE" state as a prop to NumberOfEvents', () => {
         const AppWrapper = mount(<App />);
         const AppNOEState = AppWrapper.state('NOE');
@@ -143,8 +147,7 @@ describe("<App /> integration", () => {
         AppWrapper.unmount();
     });
 
->>>>>>> ac470b4f0dcdb1a8e0c03c92478516e08a7cfc93
-
+  // eslint-disable-next-line jest/no-identical-title
   test("when the user changes NOE input, app changes NOE", async () => {
     const AppWrapper = mount(<App />);
     const eventObject = { target: { value: 20 } };
