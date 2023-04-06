@@ -46,7 +46,7 @@ export const getEvents = async () => {
   const token = await getAccessToken();
   if (token) {
     removeQuery();
-    // eslint-disable-next-line no-useless-concat
+
     const url =
       "https://jhkxb6sdub.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" +
       "/" +
