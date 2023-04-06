@@ -17,11 +17,18 @@ const credentials = {
   project_id: process.env.PROJECT_ID,
   client_secret: process.env.CLIENT_SECRET,
   calendar_id: process.env.CALENDAR_ID,
-  auth_uri: "https://accounts.google.com/o/oauth2/auth",
+  auth_uri:
+    "https://jhkxb6sdub.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url",
   token_uri: "https://oauth2.googleapis.com/token",
   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-  redirect_uris: ["https://khaledawaza.github.io/meet", "http://localhost:3000"],
-  javascript_origins: ["https://khaledawaza.github.io/meet", "http://localhost:3000"],
+  redirect_uris: [
+    "https://khaledawaza.github.io/meet",
+    "http://localhost:3000",
+  ],
+  javascript_origins: [
+    "https://khaledawaza.github.io/meet",
+    "http://localhost:3000",
+  ],
 };
 
 
