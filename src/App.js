@@ -1,82 +1,183 @@
-import React, { Component } from 'react';
-import './App.css';
-import './nprogress.css';
+import React, { Component } from "react";
+import "./App.css";
+import "./nprogress.css";
+import EventList from "./EventList";
+import CitySearch from "./CitySearch";
+import NumberOfEvents from "./NumberOfEvents";
+import { extractLocations, getEvents, checkToken, getAccessToken } from "./api";
+import { OfflineAlert } from "./Alert";
+import WelcomeScreen from "./WelcomeScreen";
+import EventGenre from "./EventGenre";
 
-import EventList from './EventList';
-import CitySearch from './CitySearch';
-import NumberOfEvents from './NumberOfEvents';
+import {
+  ScatterChart,
+  Scatter,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  // Legend,
+} from "recharts";
 
-import { getEvents, extractLocations } from './api';
-//import { mockData } from './mock-data'l
+import "bootstrap/dist/css/bootstrap.min.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 class App extends Component {
   state = {
     events: [],
     locations: [],
-    seletedLocation: 'all',
-    NOE: 32,
+    selectedLocation: "all",
+    numberOfEvents: 32,
+    showWelcomeScreen: undefined,
+  };
 
-  }
-
-  componentDidMount() {
+  async componentDidMount() {
     this.mounted = true;
-    getEvents().then((events) => {
-      if (this.mounted) {
-        //events = events.slice(0, this.state.NOE); will slice to 2 locations
-        this.setState({ events, locations: extractLocations(events) });
-      }
-    });
-  }
+    const accessToken = localStorage.getItem("access_token");
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
 
+    const code = searchParams.get("code");
+    const isLocal = window.location.href.startsWith("http://localhost")
+      ? true
+      : code || isTokenValid;
+    this.setState({ showWelcomeScreen: !isLocal });
+    if (isLocal && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          events = events.slice(0, this.state.numberOfEvents);
+          this.setState({ events, locations: extractLocations(events) });
+        }
+      });
+    }
+  }
   componentWillUnmount() {
     this.mounted = false;
   }
 
+  // Function updates events array according to chosen city
   updateEvents = (location, inputNumber) => {
-    const { NOE, selectedLocation } = this.state;
+    const { numberOfEvents, selectedLocation } = this.state;
     if (location) {
       getEvents().then((events) => {
-        const locationEvents = (location === 'all') ?
-          events :
-          events.filter((event) => event.location === location);
-        const eventsToShow = locationEvents.slice(0, NOE);
+        const locationEvents =
+          location === "all"
+            ? events
+            : events.filter((event) => event.location === location);
+        const eventsToShow = locationEvents.slice(0, numberOfEvents);
         this.setState({
           events: eventsToShow,
-          selectedLocation: location
+          selectedLocation: location,
         });
       });
     } else {
       getEvents().then((events) => {
-        const locationEvents = (selectedLocation === 'all') ? events :
-          events.filter((event) => event.location === selectedLocation);
+        const locationEvents =
+          selectedLocation === "all"
+            ? events
+            : events.filter((event) => event.location === selectedLocation);
         const eventsToShow = locationEvents.slice(0, inputNumber);
         this.setState({
           events: eventsToShow,
-          NOE: inputNumber
+          numberOfEvents: inputNumber,
         });
-      })
-    };
-  }
-  /*
-    getData = () => {
-      const { locations, events } = this.state;
-      const data = locations.map((location) => {
-        const inputNumber = events.filter((event) => event.location === location).length
-        const city = location.split(', ').shift()
-        return { city, inputNumber };
-      })
-      return data;
-    };
-  */
+      });
+    }
+
+    // getEvents().then((events) => {
+    //   const locationEvents =
+    //     location === 'all'
+    //       ? events
+    //       : events.filter((event) => event.location === location);
+    //   const eventsToShow = locationEvents.slice(0, inputNumber);
+    //   this.setState({
+    //     events: eventsToShow,
+    //     numberOfEvents: inputNumber,
+    //   });
+    // });
+  };
+
+  getData = () => {
+    const { locations, events } = this.state;
+    const data = locations.map((location) => {
+      const number = events.filter(
+        (event) => event.location === location
+      ).length;
+      const city = location.split(", ").shift();
+      return { city, number };
+    });
+    return data;
+  };
 
   render() {
+    if (this.state.showWelcomeScreen === undefined)
+      return <div className="App" />;
+
+    const offlineMessage = navigator.onLine
+      ? ""
+      : "You are currently Offline. The list of events may not be up to date";
+
     return (
-      <div className="App" >
-        <h1>Meet App</h1>
-        <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
-        <NumberOfEvents events={this.state.events} updateEvents={this.updateEvents} />
+      <Container className="App my-5 p-3">
+        <Row className="d-flex flex-column-reverse flex-md-row justify-content-md-between mb-4">
+          <Col className="col-12">
+            <OfflineAlert text={offlineMessage} />
+          </Col>
+          <Col className="px-0 col-md-8">
+            <CitySearch
+              locations={this.state.locations}
+              updateEvents={this.updateEvents}
+            />
+          </Col>
+          <Col>
+            <NumberOfEvents
+              numberOfEvents={this.state.numberOfEvents}
+              updateEvents={this.updateEvents}
+            />
+          </Col>
+        </Row>
+        <Row className="data-visualisation-container d-flex flex-column flex-md-row">
+          <Col className="PieChart col-12 col-lg-4 text-center">
+            <EventGenre events={this.state.events} />
+          </Col>
+          <Col className="ScatterChart col-12 col-lg-8 text-center">
+            <ResponsiveContainer height={400}>
+              <ScatterChart
+                margin={{
+                  top: 20,
+                  right: 0,
+                  bottom: 20,
+                  left: 0,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="city" type="category" name="city" />
+                <YAxis
+                  dataKey="number"
+                  type="number"
+                  name="number of events"
+                  allowDecimals={false}
+                />
+
+                <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+                {/* <Legend /> */}
+                <Scatter data={this.getData()} fill="#2197F3" />
+              </ScatterChart>
+            </ResponsiveContainer>
+          </Col>
+        </Row>
+
         <EventList events={this.state.events} />
-      </div>
+        <WelcomeScreen
+          showWelcomeScreen={this.state.showWelcomeScreen}
+          getAccessToken={() => {
+            getAccessToken();
+          }}
+        />
+      </Container>
     );
   }
 }
